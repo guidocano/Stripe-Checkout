@@ -3,36 +3,25 @@ import STRIPE_KEYS from "./stripe-keys.js"
 const d = document,
 $ramen =d.getElementById("ramen"),
 $template = d.getElementById("ramen-template").content,
-$fragment = d.createDocumentFragment()
-
-
-
-fetch("https://api.stripe.com/v1/products", {
+$fragment = d.createDocumentFragment(), 
+fetchOptions = {
     headers: {
         Authorization: `Bearer ${STRIPE_KEYS.secret}`
     }
-})
-.then((res) => 
-    {
-        console.log(res)
-        return res.json()
-    })
-.then(json => {
-    console.log(json)
-}); 
+};
 
+let prices, products;
 
-
-fetch("https://api.stripe.com/v1/prices", {
-    headers: {
-        Authorization: `Bearer ${STRIPE_KEYS.secret}`
-    }
-})
-.then((res) => 
-    {
-        console.log(res)
-        return res.json()
-    })
+Promise.all([
+    fetch("https://api.stripe.com/v1/products", fetchOptions),
+    fetch("https://api.stripe.com/v1/prices", fetchOptions)
+]).then(responses => Promise.all(responses.map(res => res.json())))
 .then(json => {
     console.log(json)
 })
+.catch(err => {
+    console.log(err);
+    let message = err.statusText || "Ocurrió un error al conectarse con la API de Stripe";
+    $ramen.innerHTML = `<p>Error ${err.status}: ${message}</p>`;
+}
+)
