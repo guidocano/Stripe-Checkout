@@ -4,6 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout with Stripe</title>
+
+    <style>
+
+        html{  
+            box-sizing: border-box;
+            font-family: sans-serif;
+            font-size: 16px;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        .ramen-section {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .ramen-section>*{
+            flex: 1 1 200px;
+            margin: 1rem;
+        }
+
+        .ramen-figure {
+            background-color: gainsboro;
+            font-size: 125%; 
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease-out;
+        }
+
+        .ramen-figure:hover {
+            opacity: 0.9; 
+            transform: scale(.99);
+        }
+
+        .ramen-figure img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .ramen-figure figcaption {
+            padding: 1rem;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -13,7 +61,7 @@
 
     <template id="ramen-template">
         <figure class="ramen-figure">
-            <img height="100px">
+            <img>
             <figcaption></figcaption>
         </figure>
     </template>

@@ -15,16 +15,19 @@ let prices, products;
 Promise.all([
     fetch("https://api.stripe.com/v1/products", fetchOptions),
     fetch("https://api.stripe.com/v1/prices", fetchOptions)
-]).then(responses => Promise.all(responses.map(res => res.json())))
-.then(json => {
-    console.log(json)
-    products = json[0].data;
-    prices = json[1].data;
-    console.log(products, prices);
+])
+
+.then(responses => Promise.all(responses.map(res => res.json())))
+
+.then(jsonsArray => {
+    console.log(jsonsArray) //first console log
+    products = jsonsArray[0].data;
+    prices = jsonsArray[1].data;
+    console.log(products, prices); //second console log
 
     prices.forEach(el => {
         let productData = products.filter(product => product.id === el.product);
-        console.log(productData);
+        console.log(productData); //third console log
 
         $template.querySelector(".ramen-figure").setAttribute("data-price", el.id);
         $template.querySelector("img").src = productData[0].images[0];
@@ -33,10 +36,9 @@ Promise.all([
 
         let $clone = d.importNode($template, true);
         $fragment.appendChild($clone);
-});
+    });
 
-
-$ramen.appendChild($fragment);
+    $ramen.appendChild($fragment);
 
 })
 .catch(err => {
