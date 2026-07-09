@@ -1,7 +1,7 @@
 import STRIPE_KEYS from "./stripe-keys.js"
 
 const d = document,
-$ramen =d.getElementById("ramen"),
+$ramen = d.getElementById("ramen-section"),
 $template = d.getElementById("ramen-template").content,
 $fragment = d.createDocumentFragment(), 
 fetchOptions = {
@@ -26,7 +26,7 @@ Promise.all([
         let productData = products.filter(product => product.id === el.product);
         console.log(productData);
 
-        $template.querySelector(".ramen").setAttribute("data-price", el.id);
+        $template.querySelector(".ramen-figure").setAttribute("data-price", el.id);
         $template.querySelector("img").src = productData[0].images[0];
         $template.querySelector("img").alt = productData[0].name;
         $template.querySelector("figcaption").innerHTML = `${productData[0].name} <br> ${el.currency} ${el.unit_amount_decimal} <br>`;
