@@ -10,7 +10,7 @@ fetchOptions = {
     }
 };
 
-let prices, products;
+let products, prices;
 
 const moneyFormat = (num) => {
     return `$${num.slice(0, -2) || 0}.${num.slice(-2)}`;
@@ -58,6 +58,10 @@ d.addEventListener("click", e => {
         Stripe(STRIPE_KEYS.public)
         .redirectToCheckout({
             lineItems: [{ price: priceId, quantity: 1 }],
+            mode: "payment",
+            //mode: "suscription"
+            successUrl: "http://127.0.0.1:5500/assets/stripe-success.html",
+            cancelUrl: "http://127.0.0.1:5500/assets/stripe-cancel.html"
         })
         .then(res => {
             if(res.error) {
